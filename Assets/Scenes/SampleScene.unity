@@ -5749,10 +5749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051e50d165c7a424e987059b41f0a494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraWallClip
-  wallDistance: 0.6
-  wallLayers:
-    m_Bits: 0
-  fadeImage: {fileID: 0}
 --- !u!1 &394245700 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7566341868829597924, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -9147,6 +9143,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4536606632720124229, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!208 &623974368
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623974362}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.68500006, y: 0.596, z: 0.521}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.252, y: 0.282, z: 0.51900005}
+  m_TimeToStationary: 0.5
 --- !u!1 &624076266 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5232194864031181140, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -19284,6 +19296,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1402795309}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1402795310}
     - targetCorrespondingSourceObject: {fileID: -1433227400161876609, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1336140670}
@@ -20343,6 +20358,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5675599875642460115, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 623974366}
+    - targetCorrespondingSourceObject: {fileID: 5675599875642460115, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 623974368}
     - targetCorrespondingSourceObject: {fileID: 1796892432443652299, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1778890428}
@@ -20361,12 +20379,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7832279480504223669, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1844644450}
+    - targetCorrespondingSourceObject: {fileID: 7832279480504223669, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1844644452}
     - targetCorrespondingSourceObject: {fileID: -7275921380115362395, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 190867601}
     - targetCorrespondingSourceObject: {fileID: -1846813880199464169, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1114823072}
+    - targetCorrespondingSourceObject: {fileID: -1846813880199464169, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1114823074}
     - targetCorrespondingSourceObject: {fileID: 2794927339243941595, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1000033855}
@@ -24138,6 +24162,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4969580921059848270, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!208 &1114823074
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114823068}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.641, y: 0.59400004, z: 0.78800005}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1.049, y: 0.0050000004, z: -0.551}
+  m_TimeToStationary: 0.5
 --- !u!1 &1115944988 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4825504996455771896, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -25614,6 +25654,46 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8801189173523916897, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!1 &1215102551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d7c89fbf717041e499096fb18fda160d, type: 3}
+  m_PrefabInstance: {fileID: 2077527833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1215102552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215102551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91fb5410fe5bbf04baee137756f36795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestMove
+  target: {fileID: 1545050697}
+--- !u!195 &1215102553
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215102551}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1.2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1216308446 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1120325404123358657, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -28228,6 +28308,38 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1402795310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402795307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.05
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: a9a7a3b34b8f2d34484177ce46a0af43, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1407627884 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2973834737186272969, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -30349,7 +30461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c0b404c5efc9f42b4a9fcf49973e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 17
+  speed: 20
   mouseSensitivity: 350
   playerCamera: {fileID: 392588476}
   gravity: -9.8
@@ -30391,7 +30503,7 @@ Transform:
   m_GameObject: {fileID: 1541766377}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.707, y: 5.211, z: -6.855}
+  m_LocalPosition: {x: 8.466, y: 6.183, z: -6.855}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30564,6 +30676,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5450701977022438090, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!1 &1545050696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1545050697}
+  m_Layer: 0
+  m_Name: Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1545050697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545050696}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.346, y: 9.671, z: -6.945}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1545566430 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1807751291243718866, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -34167,6 +34310,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 278737107278183511, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!208 &1844644452
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844644446}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.088, y: 0.485, z: 0.22600001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.21100001}
+  m_TimeToStationary: 0.5
 --- !u!1 &1848350081 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4669218507573047517, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -37099,7 +37258,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7c89fbf717041e499096fb18fda160d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1215102553}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7c89fbf717041e499096fb18fda160d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1215102552}
   m_SourcePrefab: {fileID: 100100000, guid: d7c89fbf717041e499096fb18fda160d, type: 3}
 --- !u!1 &2080250889 stripped
 GameObject:
@@ -37933,3 +38098,4 @@ SceneRoots:
   - {fileID: 359283896}
   - {fileID: 1541766380}
   - {fileID: 2077527833}
+  - {fileID: 1545050697}
