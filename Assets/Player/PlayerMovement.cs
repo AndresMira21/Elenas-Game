@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private bool isGrounded;
 
+    public static bool canMove = true;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -28,6 +29,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
+        if (!canMove)
+            return;
+
         // ===== DETECTAR SUELO =====
         isGrounded = Physics.CheckSphere(transform.position, groundDistance, groundMask);
 
