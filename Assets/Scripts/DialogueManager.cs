@@ -4,7 +4,6 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-
     public UIManager ui;
 
     void Awake()
@@ -12,7 +11,7 @@ public class DialogueManager : MonoBehaviour
         Instance = this;
     }
 
-    public void ShowThought(string message, float time = 3f)
+    public void ShowThought(string message, float time)
     {
         StartCoroutine(Routine(message, time));
     }

@@ -11,17 +11,12 @@ public class InspectionSystem : MonoBehaviour
 
     float normalFOV;
     bool inspecting = false;
-
     bool justExited = false;
-
-    PlayerInteraction playerInteraction;
 
     void Awake()
     {
         Instance = this;
         normalFOV = cam.fieldOfView;
-
-        playerInteraction = FindObjectOfType<PlayerInteraction>();
     }
 
     void Update()
@@ -39,9 +34,7 @@ public class InspectionSystem : MonoBehaviour
         inspecting = true;
 
         PlayerMovement.canMove = false;
-
-        if (playerInteraction != null)
-            playerInteraction.SetInteract(false);
+        PlayerMovement.canLook = false;
 
         cam.fieldOfView = zoomFOV;
 
@@ -53,15 +46,11 @@ public class InspectionSystem : MonoBehaviour
         inspecting = false;
 
         PlayerMovement.canMove = true;
-
-        if (playerInteraction != null)
-            playerInteraction.SetInteract(true);
+        PlayerMovement.canLook = true;
 
         cam.fieldOfView = normalFOV;
 
         ui.Hide();
-
-        DialogueManager.Instance.ShowThought("...");
 
         justExited = true;
         Invoke(nameof(ResetExit), 0.2f);

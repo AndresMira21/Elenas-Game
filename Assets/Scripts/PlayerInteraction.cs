@@ -4,12 +4,8 @@ public class PlayerInteraction : MonoBehaviour
 {
     public float interactDistance = 3f;
 
-    bool canInteract = true;
-
     void Update()
     {
-        if (!canInteract) return;
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
@@ -17,18 +13,31 @@ public class PlayerInteraction : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, interactDistance))
             {
-                InspectableObject obj = hit.collider.GetComponent<InspectableObject>();
+                Debug.Log("🎯 Hit: " + hit.collider.name);
 
+                // 1. DECISION OBJECT
+                DecisionObject decision = hit.collider.GetComponent<DecisionObject>();
+                if (decision != null)
+                {
+                    decision.Inspect();
+                    return;
+                }
+
+                // 2. CAMA
+                BedSleep bed = hit.collider.GetComponent<BedSleep>();
+                if (bed != null)
+                {
+                    bed.Interact();
+                    return;
+                }
+
+                // 3. SOLO TEXTO
+                InspectableObject obj = hit.collider.GetComponent<InspectableObject>();
                 if (obj != null)
                 {
                     obj.Inspect();
                 }
             }
         }
-    }
-
-    public void SetInteract(bool value)
-    {
-        canInteract = value;
     }
 }
