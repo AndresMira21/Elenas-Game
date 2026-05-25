@@ -4,17 +4,73 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int negation = 0;
-    public int acceptance = 0;
-    public int doubt = 0;
-    public int currentNight = 1;
+    // =========================
+    // ESTADO EMOCIONAL
+    // =========================
+    public int negacion;
+    public int duda;
+    public int aceptacion;
+
+    // =========================
+    // PROGRESO
+    // =========================
+    public int objectsExplored = 0;
+    public bool decisionMade = false;
 
     void Awake()
     {
         Instance = this;
     }
 
-    public void AddNegation(int amount) { negation += amount; }
-    public void AddAcceptance(int amount) { acceptance += amount; }
-    public void AddDoubt(int amount) { doubt += amount; }
+    // =========================
+    // DECISIONES + LOG
+    // =========================
+    public void AddNegacion(int v)
+    {
+        negacion += v;
+        decisionMade = true;
+        Debug.Log("📌 Elena - Negación + " + v + " | Total: " + negacion);
+    }
+
+    public void AddDuda(int v)
+    {
+        duda += v;
+        decisionMade = true;
+        Debug.Log("📌 Elena - Duda + " + v + " | Total: " + duda);
+    }
+
+    public void AddAceptacion(int v)
+    {
+        aceptacion += v;
+        decisionMade = true;
+        Debug.Log("📌 Elena - Aceptación + " + v + " | Total: " + aceptacion);
+    }
+
+    // =========================
+    // EXPLORACIÓN
+    // =========================
+    public void RegisterExploration()
+    {
+        objectsExplored++;
+        Debug.Log("🔍 Objeto explorado | Total: " + objectsExplored);
+    }
+
+    // =========================
+    // REGLA DE SUEÑO (IMPORTANTE)
+    // =========================
+    public bool CanSleep()
+    {
+        return objectsExplored >= 3 && decisionMade;
+    }
+
+    public void Sleep()
+    {
+        Debug.Log("😴 Durmiendo... avanzando día");
+
+        // reset de progreso por día
+        objectsExplored = 0;
+        decisionMade = false;
+
+        Debug.Log("🌅 Nuevo día iniciado");
+    }
 }

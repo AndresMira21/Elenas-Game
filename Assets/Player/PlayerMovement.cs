@@ -20,10 +20,14 @@ public class PlayerMovement : MonoBehaviour
 
     private float xRotation = 0f;
     private float yVelocity = 0f;
+
     private CharacterController controller;
     private bool isGrounded;
     private bool agachado = false;
     private Vector3 camaraOriginal;
+
+    public static bool canMove = true;
+    public static bool canLook = true;
 
     void Start()
     {
@@ -34,7 +38,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // ===== DETECTAR SUELO =====
+        // =========================
+        // BLOQUEO GLOBAL
+        // =========================
+        if (!canMove)
+            return;
+
+        // =========================
+        // DETECTAR SUELO
+        // =========================
         isGrounded = Physics.CheckSphere(transform.position, groundDistance, groundMask);
 
         if (isGrounded && yVelocity < 0)
@@ -42,24 +54,35 @@ public class PlayerMovement : MonoBehaviour
             yVelocity = -2f;
         }
 
-        // ===== MOUSE (MIRAR) =====
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        // =========================
+        // MOUSE LOOK
+        // =========================
+        if (canLook)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+            playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            transform.Rotate(Vector3.up * mouseX);
+        }
 
-        // ===== AGACHARSE =====
+        // =========================
+        // AGACHARSE
+        // =========================
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (agachado)
             {
                 bool hayEspacio = !Physics.SphereCast(
-                    transform.position, 0.3f, Vector3.up,
-                    out RaycastHit hit, alturaNormal - alturaAgachado);
+                    transform.position,
+                    0.3f,
+                    Vector3.up,
+                    out RaycastHit hit,
+                    alturaNormal - alturaAgachado);
+
                 if (hayEspacio)
                 {
                     agachado = false;
@@ -73,18 +96,26 @@ public class PlayerMovement : MonoBehaviour
                 agachado = true;
                 controller.height = alturaAgachado;
                 controller.center = new Vector3(0, alturaAgachado / 2, 0);
+
                 playerCamera.localPosition = new Vector3(
-                    camaraOriginal.x, 0.3f, camaraOriginal.z);
+                    camaraOriginal.x,
+                    0.3f,
+                    camaraOriginal.z
+                );
             }
         }
 
-        // ===== MOVIMIENTO =====
+        // =========================
+        // MOVIMIENTO
+        // =========================
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        // ===== GRAVEDAD =====
+        // =========================
+        // GRAVEDAD
+        // =========================
         yVelocity += gravity * Time.deltaTime;
         move.y = yVelocity;
 
