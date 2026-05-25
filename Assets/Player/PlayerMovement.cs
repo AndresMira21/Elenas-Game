@@ -14,16 +14,22 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    [Header("Agacharse")]
+    public float alturaAgachado = 0.9f;
+    public float alturaNormal = 1.8f;
+
     private float xRotation = 0f;
     private float yVelocity = 0f;
-
     private CharacterController controller;
     private bool isGrounded;
+    private bool agachado = false;
+    private Vector3 camaraOriginal;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
+        camaraOriginal = playerCamera.localPosition;
     }
 
     void Update()
@@ -46,9 +52,35 @@ public class PlayerMovement : MonoBehaviour
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
+        // ===== AGACHARSE =====
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (agachado)
+            {
+                bool hayEspacio = !Physics.SphereCast(
+                    transform.position, 0.3f, Vector3.up,
+                    out RaycastHit hit, alturaNormal - alturaAgachado);
+                if (hayEspacio)
+                {
+                    agachado = false;
+                    controller.height = alturaNormal;
+                    controller.center = new Vector3(0, alturaNormal / 2, 0);
+                    playerCamera.localPosition = camaraOriginal;
+                }
+            }
+            else
+            {
+                agachado = true;
+                controller.height = alturaAgachado;
+                controller.center = new Vector3(0, alturaAgachado / 2, 0);
+                playerCamera.localPosition = new Vector3(
+                    camaraOriginal.x, 0.3f, camaraOriginal.z);
+            }
+        }
+
         // ===== MOVIMIENTO =====
-        float x = Input.GetAxis("Horizontal"); // A/D o flechas
-        float z = Input.GetAxis("Vertical");   // W/S o flechas
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
 
