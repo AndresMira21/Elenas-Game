@@ -9,35 +9,55 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, distance))
+            if (Physics.Raycast(
+                cam.transform.position,
+                cam.transform.forward,
+                out RaycastHit hit,
+                distance))
             {
                 Debug.Log("Hit: " + hit.collider.name);
 
-                // 🔵 Decision objects
-                DecisionObject d = hit.collider.GetComponentInParent<DecisionObject>();
+                // 🔵 OBJETOS CON DECISIONES
+                DecisionObject d =
+                    hit.collider.GetComponentInParent<DecisionObject>();
+
                 if (d != null)
                 {
                     d.Inspect();
                     return;
                 }
 
-                // 🟡 Inspectable objects (SIN decisiones)
-                InspectableObject iObj = hit.collider.GetComponentInParent<InspectableObject>();
-                if (iObj != null)
+                // 🟡 OBJETOS SIEMPRE INSPECTABLES
+                InspectableObject inspect =
+                    hit.collider.GetComponentInParent<InspectableObject>();
+
+                if (inspect != null)
                 {
-                    iObj.Inspect();
+                    inspect.Inspect();
                     return;
                 }
 
-                // 🛏 cama
-                BedSleep bed = hit.collider.GetComponentInParent<BedSleep>();
+                // 🟠 OBJETOS POR DÍA
+                InteractableObject interact =
+                    hit.collider.GetComponentInParent<InteractableObject>();
+
+                if (interact != null)
+                {
+                    interact.Interact();
+                    return;
+                }
+
+                // 🛏 CAMA
+                BedSleep bed =
+                    hit.collider.GetComponentInParent<BedSleep>();
+
                 if (bed != null)
                 {
                     bed.Interact();
                     return;
                 }
 
-                Debug.Log("Nada interactuable aquí");
+                Debug.Log("Nada interactuable.");
             }
         }
     }
