@@ -20,6 +20,8 @@ public class InspectableObject : MonoBehaviour
 
     public void Inspect()
     {
+        GameManager.Instance.RegisterExploration();
+        
         PlayerMovement.canMove = false;
         PlayerMovement.canLook = false;
 
