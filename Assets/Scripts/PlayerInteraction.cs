@@ -2,41 +2,42 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    public float interactDistance = 3f;
+    public Camera cam;
+    public float distance = 3f;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, interactDistance))
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, distance))
             {
-                Debug.Log("🎯 Hit: " + hit.collider.name);
+                Debug.Log("Hit: " + hit.collider.name);
 
-                // 1. DECISION OBJECT
-                DecisionObject decision = hit.collider.GetComponent<DecisionObject>();
-                if (decision != null)
+                // 🔵 Decision objects
+                DecisionObject d = hit.collider.GetComponentInParent<DecisionObject>();
+                if (d != null)
                 {
-                    decision.Inspect();
+                    d.Inspect();
                     return;
                 }
 
-                // 2. CAMA
-                BedSleep bed = hit.collider.GetComponent<BedSleep>();
+                // 🟡 Inspectable objects (SIN decisiones)
+                InspectableObject iObj = hit.collider.GetComponentInParent<InspectableObject>();
+                if (iObj != null)
+                {
+                    iObj.Inspect();
+                    return;
+                }
+
+                // 🛏 cama
+                BedSleep bed = hit.collider.GetComponentInParent<BedSleep>();
                 if (bed != null)
                 {
                     bed.Interact();
                     return;
                 }
 
-                // 3. SOLO TEXTO
-                InspectableObject obj = hit.collider.GetComponent<InspectableObject>();
-                if (obj != null)
-                {
-                    obj.Inspect();
-                }
+                Debug.Log("Nada interactuable aquí");
             }
         }
     }

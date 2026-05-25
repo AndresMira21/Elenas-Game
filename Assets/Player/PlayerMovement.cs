@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float speed = 5f;
+    public float speed = 6f;
 
     [Header("Mouse")]
     public float mouseSensitivity = 100f;
@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Agacharse")]
     public float alturaAgachado = 0.9f;
-    public float alturaNormal = 1.8f;
+    public float alturaNormal = 1.9f;
 
     private float xRotation = 0f;
     private float yVelocity = 0f;
@@ -24,10 +24,20 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private bool isGrounded;
     private bool agachado = false;
-    private Vector3 camaraOriginal;
+    public Vector3 camaraOriginal;
 
     public static bool canMove = true;
     public static bool canLook = true;
+
+    public void SetCameraHeight(float y)
+    {
+        Vector3 pos = playerCamera.localPosition;
+        pos.y = y;
+
+        playerCamera.localPosition = pos;
+
+        camaraOriginal = playerCamera.localPosition;
+    }
 
     void Start()
     {
@@ -120,5 +130,17 @@ public class PlayerMovement : MonoBehaviour
         move.y = yVelocity;
 
         controller.Move(move * Time.deltaTime);
+
+
+    }
+
+    public void ResetCrouchState()
+    {
+        agachado = false;
+
+        controller.height = alturaNormal;
+        controller.center = new Vector3(0, alturaNormal / 2, 0);
+
+        playerCamera.localPosition = camaraOriginal;
     }
 }
