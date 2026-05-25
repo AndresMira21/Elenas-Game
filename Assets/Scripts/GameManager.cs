@@ -4,60 +4,50 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    // =========================
-    // ESTADO EMOCIONAL
-    // =========================
+    [Header("Día")]
+    public int currentDay = 1;
+
+    [Header("Progreso")]
+    public int objectsExplored = 0;
+    public bool decisionMade = false;
+
+    [Header("Emociones")]
     public int negacion;
     public int duda;
     public int aceptacion;
-
-    // =========================
-    // PROGRESO
-    // =========================
-    public int objectsExplored = 0;
-    public bool decisionMade = false;
 
     void Awake()
     {
         Instance = this;
     }
 
-    // =========================
-    // DECISIONES + LOG
-    // =========================
+    public void RegisterExploration()
+    {
+        objectsExplored++;
+        Debug.Log("Exploración: " + objectsExplored);
+    }
+
     public void AddNegacion(int v)
     {
         negacion += v;
         decisionMade = true;
-        Debug.Log("📌 Elena - Negación + " + v + " | Total: " + negacion);
+        Debug.Log("Negación +" + v);
     }
 
     public void AddDuda(int v)
     {
         duda += v;
         decisionMade = true;
-        Debug.Log("📌 Elena - Duda + " + v + " | Total: " + duda);
+        Debug.Log("Duda +" + v);
     }
 
     public void AddAceptacion(int v)
     {
         aceptacion += v;
         decisionMade = true;
-        Debug.Log("📌 Elena - Aceptación + " + v + " | Total: " + aceptacion);
+        Debug.Log("Aceptación +" + v);
     }
 
-    // =========================
-    // EXPLORACIÓN
-    // =========================
-    public void RegisterExploration()
-    {
-        objectsExplored++;
-        Debug.Log("🔍 Objeto explorado | Total: " + objectsExplored);
-    }
-
-    // =========================
-    // REGLA DE SUEÑO (IMPORTANTE)
-    // =========================
     public bool CanSleep()
     {
         return objectsExplored >= 3 && decisionMade;
@@ -65,12 +55,13 @@ public class GameManager : MonoBehaviour
 
     public void Sleep()
     {
-        Debug.Log("😴 Durmiendo... avanzando día");
+        Debug.Log("😴 Durmiendo...");
 
-        // reset de progreso por día
+        currentDay++;
+
+        Debug.Log("📅 Día: " + currentDay);
+
         objectsExplored = 0;
         decisionMade = false;
-
-        Debug.Log("🌅 Nuevo día iniciado");
     }
 }
