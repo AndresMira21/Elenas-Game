@@ -22,9 +22,9 @@ public class TestMove : MonoBehaviour
     {
         GameManager gm = GameManager.Instance;
 
-        if (gm.negation >= gm.acceptance && gm.negation >= gm.doubt)
+        if (gm.negacion >= gm.aceptacion && gm.negacion >= gm.duda)
             ComportamientoNegacion();
-        else if (gm.doubt >= gm.acceptance)
+        else if (gm.duda >= gm.aceptacion)
             ComportamientoDuda();
         else
             ComportamientoAceptacion();

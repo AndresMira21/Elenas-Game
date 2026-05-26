@@ -63,5 +63,8 @@ public class GameManager : MonoBehaviour
 
         objectsExplored = 0;
         decisionMade = false;
+
+        // Activa a Elena en el Nivel 2
+        ElenaSecuenciaNivel2.Instance?.IniciarSecuencia();
     }
 }
