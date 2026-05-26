@@ -6,44 +6,62 @@ public class DecisionObject : MonoBehaviour
     [TextArea]
     public string title;
 
-    public List<DecisionData> options = new List<DecisionData>();
+    public List<DecisionData> options =
+        new List<DecisionData>();
 
+    [Header("Días activos")]
     public int activeFromDay = 1;
+    public int activeUntilDay = 999;
+
+    [Header("Uso")]
+    public bool oneUseOnly = true;
 
     bool used = false;
 
     bool CanUse()
     {
-        return GameManager.Instance.currentDay >= activeFromDay;
+        if (GameManager.Instance == null)
+            return false;
+
+        int day = GameManager.Instance.currentDay;
+
+        return day >= activeFromDay &&
+               day <= activeUntilDay;
     }
 
-    public void Inspect()
+    public bool Inspect()
     {
         if (!CanUse())
-        {
-            Debug.Log("No disponible hoy");
-            return;
-        }
+            return false;
 
-        if (used) return;
+        if (oneUseOnly && used)
+            return false;
 
         GameManager.Instance.RegisterExploration();
 
-        List<DecisionOption> runtime = new List<DecisionOption>();
+        List<DecisionOption> runtime =
+            new List<DecisionOption>();
 
         foreach (var opt in options)
         {
-            runtime.Add(new DecisionOption(opt.text, () =>
-            {
-                Execute(opt);
-            }));
+            runtime.Add(
+                new DecisionOption(opt.text, () =>
+                {
+                    Execute(opt);
+                })
+            );
         }
 
-        DecisionManager.Instance.Show(title, runtime, () =>
-        {
-            used = true;
-            GameManager.Instance.decisionMade = true;
-        });
+        DecisionManager.Instance.Show(
+            title,
+            runtime,
+            () =>
+            {
+                used = true;
+                GameManager.Instance.decisionMade = true;
+            });
+
+        return true;
     }
 
     void Execute(DecisionData opt)

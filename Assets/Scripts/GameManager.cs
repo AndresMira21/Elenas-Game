@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("GAME MANAGER FUNCIONANDO");
+
         Instance = this;
     }
 
