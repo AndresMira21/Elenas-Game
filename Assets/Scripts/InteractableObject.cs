@@ -5,8 +5,9 @@ public class InteractableObject : MonoBehaviour
     [TextArea]
     public string message;
 
-    [Header("Disponible desde el día")]
+    [Header("Días activos")]
     public int activeFromDay = 1;
+    public int activeUntilDay = 999;
 
     [Header("¿Solo una vez?")]
     public bool oneUseOnly = false;
@@ -17,29 +18,28 @@ public class InteractableObject : MonoBehaviour
 
     bool CanUse()
     {
-        return GameManager.Instance.currentDay >= activeFromDay;
+        int day = GameManager.Instance.currentDay;
+
+        return day >= activeFromDay &&
+               day <= activeUntilDay;
     }
 
     public void Interact()
     {
-        // 🚫 Aún no disponible
         if (!CanUse())
-        {
             return;
-        }
 
-        // 🚫 Ya usado
         if (oneUseOnly && used)
-        {
             return;
-        }
 
         used = true;
 
         GameManager.Instance.RegisterExploration();
 
-        // ✅ MENSAJE EN PANTALLA
-        DialogueManager.Instance.ShowThought(message, messageTime);
+        DialogueManager.Instance.ShowThought(
+            message,
+            messageTime
+        );
 
         Debug.Log(message);
     }
