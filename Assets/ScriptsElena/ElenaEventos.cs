@@ -107,6 +107,13 @@ public class ElenaEventos : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(-N2_Fregadero.forward);
         yield return new WaitForSeconds(3f);
 
+        // Martín dice "¿Adónde vas?" cuando Elena pasa junto a él
+        DialogueManager.Instance.ShowThought("¿Adónde vas?", 5f);
+        yield return new WaitForSeconds(2f);
+
+        // 4. Camina a la cama
+        yield return StartCoroutine(CaminarHasta(N2_Cama));
+
         // 4. Camina a la cama
         yield return StartCoroutine(CaminarHasta(N2_Cama));
 
@@ -121,7 +128,7 @@ public class ElenaEventos : MonoBehaviour
     IEnumerator Evento_JugadorEntraCuarto()
     {
         DialogueManager.Instance.ShowThought(
-            "[Elena]: Ya es tarde para cambiar lo que pasó. Pero todavía no entiendo por qué sigue pasando.", 5f);
+            "[Elena]: Ya es tarde para cambiar lo que pasó. Pero todavía no entiendo por qué sigue pasando...", 5f);
         yield return new WaitForSeconds(5f);
 
         if (jugadorSiguioDeInmediato)
