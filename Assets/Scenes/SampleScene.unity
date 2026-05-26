@@ -39003,7 +39003,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 560635e136872b64c8cae9ad121709cc, type: 2}
     - target: {fileID: 919132149155446097, guid: d7c89fbf717041e499096fb18fda160d, type: 3}
       propertyPath: m_Name
-      value: base@Idle
+      value: Elena
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d7c89fbf717041e499096fb18fda160d, type: 3}
       propertyPath: m_IsActive
