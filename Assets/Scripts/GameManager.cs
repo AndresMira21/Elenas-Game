@@ -56,15 +56,12 @@ public class GameManager : MonoBehaviour
     public void Sleep()
     {
         Debug.Log("😴 Durmiendo...");
-
         currentDay++;
-
         Debug.Log("📅 Día: " + currentDay);
-
         objectsExplored = 0;
         decisionMade = false;
 
-        // Activa a Elena en el Nivel 2
-        ElenaSecuenciaNivel2.Instance?.IniciarSecuencia();
+        if (currentDay == 2)
+            ElenaEventos.Instance.ActivarYAparece();
     }
 }
