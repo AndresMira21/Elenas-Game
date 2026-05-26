@@ -49,3 +49,8 @@ Thumbs.db
 
 # ========== ADDRESSABLES ==========
 /Assets/AddressableAssetsData/*/*.bin*
+
+# ========== PESADO ==========
+Assets/Casita/
+Assets/AllSkyFree/
+Assets/_TerrainAutoUpgrade/
