@@ -7,8 +7,14 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
+        if (DecisionManager.BlockInteraction)
+            return;
+
+        if (DecisionManager.IsActive)
+             return;
+
         if (Input.GetKeyDown(KeyCode.E))
-        {
+            {
             if (Physics.Raycast(
                 cam.transform.position,
                 cam.transform.forward,
@@ -17,17 +23,17 @@ public class PlayerInteraction : MonoBehaviour
             {
                 Debug.Log("Hit: " + hit.collider.name);
 
-                // 🔵 OBJETOS CON DECISIONES
+                // 🔵 DECISION OBJECT
                 DecisionObject d =
                     hit.collider.GetComponentInParent<DecisionObject>();
 
                 if (d != null)
                 {
-                    d.Inspect();
-                    return;
+                    if (d.Inspect())
+                        return;
                 }
 
-                // 🟡 OBJETOS SIEMPRE INSPECTABLES
+                // 🟡 INSPECTABLE
                 InspectableObject inspect =
                     hit.collider.GetComponentInParent<InspectableObject>();
 
@@ -37,7 +43,7 @@ public class PlayerInteraction : MonoBehaviour
                     return;
                 }
 
-                // 🟠 OBJETOS POR DÍA
+                // 🟠 INTERACTABLE
                 InteractableObject interact =
                     hit.collider.GetComponentInParent<InteractableObject>();
 
