@@ -63,7 +63,9 @@ public class GameManager : MonoBehaviour
         decisionMade = false;
 
         if (currentDay == 2)
-        ElenaEventos.Instance.ActivarYAparece();
+        {
+            ElenaEventos.Instance.ActivarYAparece();
+        }
         else if (currentDay == 3)
         {
             ElenaEventos.Instance.PrepararNivel3();
@@ -76,5 +78,10 @@ public class GameManager : MonoBehaviour
         {
             ElenaEventos.Instance.ActivarNivel5();
         }
+        else if (currentDay == 6)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
+        }
+
     }
 }
