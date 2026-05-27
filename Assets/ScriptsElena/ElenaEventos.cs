@@ -19,12 +19,19 @@ public class ElenaEventos : MonoBehaviour
     public Transform N3_Sofa;
     public Transform N3_Cuarto;
 
+    [Header("Puntos Nivel 4")]
+    public Transform N4_EntradaBano;
+    public Transform N4_EspejoLavamanos;
+    public Transform N4_EspejoPasillo;
+
     private float tiempoDesdeAparicion = 0f;
     private bool elenaActiva = false;
     private bool jugadorSiguioDeInmediato = false;
     private bool elenaEnCama = false;
     private bool elenaCaminando = false;
     private bool elenaYaAparecionivel3 = false;
+    private bool jugadorCercaEspejo = false;
+    private bool esperandoJugador = false;
 
     void Awake() { Instance = this; }
 
@@ -50,6 +57,8 @@ public class ElenaEventos : MonoBehaviour
         elenaActiva = false;
         elenaCaminando = false;
         elenaYaAparecionivel3 = false;
+        jugadorCercaEspejo = false;
+        esperandoJugador = false;
         if (animator != null)
         {
             animator.SetBool("isSitting", false);
@@ -73,11 +82,11 @@ public class ElenaEventos : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void PrepararNivel4()
+    public void ActivarNivel4()
     {
-        StopAllCoroutines();
         ResetElena();
-        gameObject.SetActive(false);
+        gameObject.SetActive(true);
+        StartCoroutine(Nivel4());
     }
 
     public void PrepararNivel5()
@@ -100,6 +109,12 @@ public class ElenaEventos : MonoBehaviour
     }
 
     public bool ElenaListaEnCama() { return elenaEnCama; }
+
+    public void JugadorCercaEspejo()
+    {
+        if (esperandoJugador)
+            jugadorCercaEspejo = true;
+    }
 
     public void EjecutarEvento(string nombreEvento)
     {
@@ -220,7 +235,6 @@ public class ElenaEventos : MonoBehaviour
 
         if (estado == "Aceptacion")
         {
-            // Ojos se acercan 1cm por un segundo
             yield return new WaitForSeconds(1f);
             transform.rotation = Quaternion.LookRotation(
                 (N3_Pasillo.forward + Vector3.right * 0.05f).normalized);
@@ -230,18 +244,15 @@ public class ElenaEventos : MonoBehaviour
         }
         else
         {
-            // Duda — espera normal
             yield return new WaitForSeconds(8f);
         }
 
-        // Da media vuelta, camina al cuarto y desaparece
         yield return StartCoroutine(CaminarHasta(N3_Cuarto));
-        gameObject.SetActive(false); // ← desaparece siempre al final
+        gameObject.SetActive(false);
     }
 
     IEnumerator Nivel3_ApareceEnSofa()
     {
-        // Si ya apareció en pasillo no aparece en sofá
         if (elenaYaAparecionivel3)
         {
             yield return null;
@@ -270,16 +281,79 @@ public class ElenaEventos : MonoBehaviour
         animator.SetBool("isSitting", true);
     }
 
-    // ===== NIVEL 4 Y 5 — placeholder =====
-    IEnumerator Nivel4_Iniciar()
+    // ===== NIVEL 4 =====
+    IEnumerator Nivel4()
     {
-        yield return new WaitForSeconds(0.1f);
-        gameObject.SetActive(false);
-    }
+        string estado = EstadoDominante();
+        Debug.Log("Nivel 4 - Estado: " + estado);
 
-    IEnumerator Nivel5_Iniciar()
-    {
-        yield return new WaitForSeconds(0.1f);
-        gameObject.SetActive(false);
+        if (estado == "Negacion")
+        {
+            agent.Warp(N4_EspejoPasillo.position);
+            yield return null;
+            transform.rotation = Quaternion.LookRotation(N4_EspejoPasillo.forward);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            yield return new WaitForSeconds(5f);
+            gameObject.SetActive(false);
+        }
+        else if (estado == "Duda")
+        {
+            agent.Warp(N4_EntradaBano.position);
+            yield return new WaitUntil(() => agent.isOnNavMesh);
+            transform.rotation = Quaternion.LookRotation(N4_EntradaBano.forward);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            yield return StartCoroutine(CaminarHasta(N4_EspejoLavamanos));
+            transform.rotation = Quaternion.LookRotation(N4_EspejoLavamanos.forward);
+            yield return new WaitForSeconds(7f);
+
+            yield return StartCoroutine(CaminarHasta(N4_EspejoPasillo));
+            transform.rotation = Quaternion.LookRotation(N4_EspejoPasillo.forward);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            DialogueManager.Instance.ShowThought("¿Por qué sigo viéndola aquí?", 3f);
+            yield return new WaitForSeconds(3f);
+            gameObject.SetActive(false);
+        }
+        else if (estado == "Aceptacion")
+        {
+            agent.Warp(N4_EntradaBano.position);
+            yield return new WaitUntil(() => agent.isOnNavMesh);
+            transform.rotation = Quaternion.LookRotation(N4_EntradaBano.forward);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            yield return StartCoroutine(CaminarHasta(N4_EspejoLavamanos));
+            transform.rotation = Quaternion.LookRotation(N4_EspejoLavamanos.forward);
+            yield return new WaitForSeconds(7f);
+
+            yield return StartCoroutine(CaminarHasta(N4_EspejoPasillo));
+            transform.rotation = Quaternion.LookRotation(N4_EspejoPasillo.forward);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            DialogueManager.Instance.ShowThought("Hay algo raro con mi reflejo...", 3f);
+            yield return new WaitForSeconds(1f);
+            gameObject.SetActive(false);
+        }
     }
 }

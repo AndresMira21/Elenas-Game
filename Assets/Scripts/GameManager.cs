@@ -63,12 +63,18 @@ public class GameManager : MonoBehaviour
         decisionMade = false;
 
         if (currentDay == 2)
-            ElenaEventos.Instance.ActivarYAparece();
+        ElenaEventos.Instance.ActivarYAparece();
         else if (currentDay == 3)
+        {
             ElenaEventos.Instance.PrepararNivel3();
+        }
         else if (currentDay == 4)
-            ElenaEventos.Instance.PrepararNivel4();
+        {
+            ElenaEventos.Instance.ActivarNivel4();
+        }
         else if (currentDay == 5)
+        {
             ElenaEventos.Instance.PrepararNivel5();
+        }
     }
 }
