@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Debug.Log("GAME MANAGER FUNCIONANDO");
-
         Instance = this;
     }
 
@@ -58,15 +57,31 @@ public class GameManager : MonoBehaviour
     public void Sleep()
     {
         Debug.Log("😴 Durmiendo...");
-
         currentDay++;
-
         Debug.Log("📅 Día: " + currentDay);
-
         objectsExplored = 0;
         decisionMade = false;
 
-        // Activa a Elena en el Nivel 2
-        ElenaSecuenciaNivel2.Instance?.IniciarSecuencia();
+        if (currentDay == 2)
+        {
+            ElenaEventos.Instance.ActivarYAparece();
+        }
+        else if (currentDay == 3)
+        {
+            ElenaEventos.Instance.PrepararNivel3();
+        }
+        else if (currentDay == 4)
+        {
+            ElenaEventos.Instance.ActivarNivel4();
+        }
+        else if (currentDay == 5)
+        {
+            ElenaEventos.Instance.ActivarNivel5();
+        }
+        else if (currentDay == 6)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
+        }
+
     }
 }
