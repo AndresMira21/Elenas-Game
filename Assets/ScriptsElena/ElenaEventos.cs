@@ -315,7 +315,7 @@ public class ElenaEventos : MonoBehaviour
         animator.SetBool("isSitting", true);
     }
 
-    // ===== NIVEL 4 =====
+    // ==== NIVEL 4 =====
     IEnumerator Nivel4()
     {
         string estado = EstadoDominante();
