@@ -2,66 +2,57 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using TMPro;
 
-/// <summary>
-/// Controla el menú principal de Elena's Game.
-/// Maneja las pantallas: Menu, Configuración.
-/// El panel de niveles se ignora por ahora (pendiente).
-/// </summary>
 public class MainMenuController : MonoBehaviour
 {
     // ── Escenas ──────────────────────────────────────────────
-    private const string GAME_SCENE    = "SampleScene";
-    private const string ENDING_SCENE  = "Ending";
+    private const string GAME_SCENE = "SampleScene";
 
-    // ── Videos de fondo ──────────────────────────────────────
+    // ── Videos ───────────────────────────────────────────────
     [Header("Videos de Fondo")]
-    [Tooltip("VideoClip: MENU.mp4")]
     public VideoClip menuVideoClip;
-
-    [Tooltip("VideoClip: CONFIGURACION.mp4")]
     public VideoClip configVideoClip;
-
-    [Tooltip("Componente VideoPlayer de la escena")]
     public VideoPlayer videoPlayer;
-
-    [Tooltip("RawImage donde se renderiza el video (ocupa toda la pantalla)")]
     public RawImage backgroundImage;
-
-    [Tooltip("RenderTexture asignada al VideoPlayer y al RawImage")]
     public RenderTexture backgroundRenderTexture;
 
     // ── Audio ─────────────────────────────────────────────────
     [Header("Audio")]
-    [Tooltip("AudioSource con Fear.ogg — loop automático")]
     public AudioSource backgroundMusic;
 
-    // ── Paneles UI ────────────────────────────────────────────
+    // ── Paneles ───────────────────────────────────────────────
     [Header("Paneles")]
-    [Tooltip("Panel raíz del menú principal")]
     public GameObject menuPanel;
-
-    [Tooltip("Panel de configuración")]
     public GameObject settingsPanel;
+    public GameObject levelsPanel;
 
-    // ── Configuración (Settings) ──────────────────────────────
+    // ── Sliders de Audio ──────────────────────────────────────
     [Header("Sliders de Audio")]
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
     public Slider sfxVolumeSlider;
+
+    // ── Textos de valor de sliders ────────────────────────────
+    [Header("Textos de Valor (opcional)")]
+    public TextMeshProUGUI masterVolumeText;
+    public TextMeshProUGUI musicVolumeText;
+    public TextMeshProUGUI sfxVolumeText;
+    public TextMeshProUGUI sensitivityText;
+
+    // ── Controles ─────────────────────────────────────────────
+    [Header("Slider de Controles")]
     public Slider mouseSensitivitySlider;
 
-    [Header("Toggles de Gráficos")]
+    // ── Gráficos ──────────────────────────────────────────────
+    [Header("Gráficos")]
+    public TMP_Dropdown graphicsQualityDropdown;
     public Toggle fullscreenToggle;
     public Toggle vsyncToggle;
 
-    [Header("Dropdown de Calidad")]
-    public Dropdown graphicsQualityDropdown;
-
-    // ── Mensajes glitch ───────────────────────────────────────
+    // ── Glitch ────────────────────────────────────────────────
     [Header("Glitch")]
-    [Tooltip("Text UI donde aparecen los mensajes ocultos")]
-    public Text glitchText;
+    public TextMeshProUGUI glitchText;
 
     private readonly string[] hiddenMessages = {
         "NO ESTÁS SOLO...", "ELLA TE OBSERVA", "CORRE",
@@ -70,36 +61,61 @@ public class MainMenuController : MonoBehaviour
     };
 
     private float glitchTimer = 0f;
-    private float glitchInterval = 3f;
 
     // ─────────────────────────────────────────────────────────
     void Start()
     {
         ShowMenu();
 
-        // Música en loop
+        // Música
         if (backgroundMusic != null)
         {
             backgroundMusic.loop = true;
             if (!backgroundMusic.isPlaying) backgroundMusic.Play();
         }
 
-        // Valores por defecto de configuración
-        if (masterVolumeSlider != null)    masterVolumeSlider.value    = 80f;
-        if (musicVolumeSlider != null)     musicVolumeSlider.value     = 70f;
-        if (sfxVolumeSlider != null)       sfxVolumeSlider.value       = 85f;
-        if (mouseSensitivitySlider != null) mouseSensitivitySlider.value = 50f;
-        if (fullscreenToggle != null)      fullscreenToggle.isOn       = true;
-        if (vsyncToggle != null)           vsyncToggle.isOn            = true;
+        // Valores por defecto
+        InitSliders();
+
+        // Dropdown opciones
+        if (graphicsQualityDropdown != null)
+        {
+            graphicsQualityDropdown.ClearOptions();
+            graphicsQualityDropdown.AddOptions(new System.Collections.Generic.List<string>
+                { "Baja", "Media", "Alta", "Ultra" });
+            graphicsQualityDropdown.value = 2; // Alta por defecto
+            graphicsQualityDropdown.onValueChanged.AddListener(OnGraphicsQualityChanged);
+        }
+
+        // Toggles
+        if (fullscreenToggle != null)
+        {
+            fullscreenToggle.isOn = Screen.fullScreen;
+            fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
+        }
+        if (vsyncToggle != null)
+        {
+            vsyncToggle.isOn = QualitySettings.vSyncCount > 0;
+            vsyncToggle.onValueChanged.AddListener(OnVSyncChanged);
+        }
+
+        // Listeners de sliders
+        if (masterVolumeSlider != null)
+            masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
+        if (musicVolumeSlider != null)
+            musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+        if (sfxVolumeSlider != null)
+            sfxVolumeSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
+        if (mouseSensitivitySlider != null)
+            mouseSensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
     }
 
     void Update()
     {
-        // Glitch messages solo en el menú principal
         if (menuPanel != null && menuPanel.activeSelf)
         {
             glitchTimer += Time.deltaTime;
-            if (glitchTimer >= glitchInterval)
+            if (glitchTimer >= 3f)
             {
                 glitchTimer = 0f;
                 if (Random.value > 0.7f) TriggerGlitch();
@@ -109,7 +125,6 @@ public class MainMenuController : MonoBehaviour
 
     // ── Navegación ────────────────────────────────────────────
 
-    /// <summary>Muestra el menú principal con su video.</summary>
     public void ShowMenu()
     {
         SetPanel(menuPanel, true);
@@ -117,13 +132,24 @@ public class MainMenuController : MonoBehaviour
         PlayVideo(menuVideoClip);
     }
 
-    /// <summary>Botón JUGAR → carga SampleScene.</summary>
     public void StartGame()
     {
         SceneManager.LoadScene(GAME_SCENE);
     }
 
-    /// <summary>Botón CONFIGURACIÓN → muestra panel de settings.</summary>
+    public void OpenLevels()
+    {
+        SetPanel(menuPanel, false);
+        SetPanel(settingsPanel, false);
+        SetPanel(levelsPanel, true);
+        PlayVideo(null); // Tu compañero puede asignar el video de niveles
+    }
+
+    public void CloseLevels()
+    {
+        ShowMenu();
+    }
+
     public void OpenSettings()
     {
         SetPanel(menuPanel, false);
@@ -131,25 +157,11 @@ public class MainMenuController : MonoBehaviour
         PlayVideo(configVideoClip);
     }
 
-    /// <summary>Botón VOLVER dentro de configuración.</summary>
     public void CloseSettings()
     {
         ShowMenu();
     }
 
-    /// <summary>Restaura los valores por defecto de configuración.</summary>
-    public void RestoreDefaults()
-    {
-        if (masterVolumeSlider != null)     masterVolumeSlider.value     = 80f;
-        if (musicVolumeSlider != null)      musicVolumeSlider.value      = 70f;
-        if (sfxVolumeSlider != null)        sfxVolumeSlider.value        = 85f;
-        if (mouseSensitivitySlider != null) mouseSensitivitySlider.value = 50f;
-        if (fullscreenToggle != null)       fullscreenToggle.isOn        = true;
-        if (vsyncToggle != null)            vsyncToggle.isOn             = true;
-        if (graphicsQualityDropdown != null) graphicsQualityDropdown.value = 2; // "high"
-    }
-
-    /// <summary>Botón SALIR.</summary>
     public void QuitGame()
     {
 #if UNITY_EDITOR
@@ -157,6 +169,74 @@ public class MainMenuController : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    // ── Configuración ─────────────────────────────────────────
+
+    public void RestoreDefaults()
+    {
+        InitSliders();
+        if (graphicsQualityDropdown != null) graphicsQualityDropdown.value = 2;
+        if (fullscreenToggle != null) fullscreenToggle.isOn = true;
+        if (vsyncToggle != null) vsyncToggle.isOn = true;
+        ApplyGraphicsQuality(2);
+        Screen.fullScreen = true;
+        QualitySettings.vSyncCount = 1;
+    }
+
+    private void InitSliders()
+    {
+        if (masterVolumeSlider != null) { masterVolumeSlider.value = 80f; UpdateText(masterVolumeText, 80f); }
+        if (musicVolumeSlider != null)  { musicVolumeSlider.value  = 70f; UpdateText(musicVolumeText, 70f); }
+        if (sfxVolumeSlider != null)    { sfxVolumeSlider.value    = 85f; UpdateText(sfxVolumeText, 85f); }
+        if (mouseSensitivitySlider != null) { mouseSensitivitySlider.value = 50f; UpdateText(sensitivityText, 50f); }
+    }
+
+    // ── Listeners ─────────────────────────────────────────────
+
+    private void OnMasterVolumeChanged(float value)
+    {
+        AudioListener.volume = value / 100f;
+        UpdateText(masterVolumeText, value);
+    }
+
+    private void OnMusicVolumeChanged(float value)
+    {
+        if (backgroundMusic != null) backgroundMusic.volume = value / 100f;
+        UpdateText(musicVolumeText, value);
+    }
+
+    private void OnSFXVolumeChanged(float value)
+    {
+        UpdateText(sfxVolumeText, value);
+    }
+
+    private void OnSensitivityChanged(float value)
+    {
+        UpdateText(sensitivityText, value);
+    }
+
+    private void OnGraphicsQualityChanged(int index)
+    {
+        ApplyGraphicsQuality(index);
+    }
+
+    private void OnFullscreenChanged(bool value)
+    {
+        Screen.fullScreen = value;
+    }
+
+    private void OnVSyncChanged(bool value)
+    {
+        QualitySettings.vSyncCount = value ? 1 : 0;
+    }
+
+    private void ApplyGraphicsQuality(int index)
+    {
+        // 0=Baja, 1=Media, 2=Alta, 3=Ultra
+        int[] qualityMap = { 0, 2, 4, 5 };
+        if (index >= 0 && index < qualityMap.Length)
+            QualitySettings.SetQualityLevel(qualityMap[index], true);
     }
 
     // ── Helpers ───────────────────────────────────────────────
@@ -169,19 +249,22 @@ public class MainMenuController : MonoBehaviour
     private void PlayVideo(VideoClip clip)
     {
         if (videoPlayer == null || clip == null) return;
-        videoPlayer.clip      = clip;
+        videoPlayer.clip = clip;
         videoPlayer.isLooping = true;
         videoPlayer.Play();
-
-        // Asignar la RenderTexture al RawImage
         if (backgroundImage != null && backgroundRenderTexture != null)
             backgroundImage.texture = backgroundRenderTexture;
+    }
+
+    private void UpdateText(TextMeshProUGUI tmp, float value)
+    {
+        if (tmp != null) tmp.text = Mathf.RoundToInt(value) + "%";
     }
 
     private void TriggerGlitch()
     {
         if (glitchText == null) return;
-        glitchText.text    = hiddenMessages[Random.Range(0, hiddenMessages.Length)];
+        glitchText.text = hiddenMessages[Random.Range(0, hiddenMessages.Length)];
         glitchText.enabled = true;
         Invoke(nameof(HideGlitch), 0.8f);
     }

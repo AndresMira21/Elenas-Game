@@ -901,12 +901,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 31889493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a34ec61a52e11428518614bc84715a, type: 3}
+  m_Script: {fileID: 11500000, guid: 40e72fa60c7cfb8448158eba3a1d62bf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DemoTrigger
-  diaFinal: 6
-  demoEnding: {fileID: 0}
-  _finalActivado: 0
+  m_EditorClassIdentifier: Assembly-CSharp::GameStarter
 --- !u!1 &33914285 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4440989423395231452, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -12760,17 +12757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abf20e9a28fc374593945d243fa3672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecisionObject
-  title: "\"\xBFDeberia ver un rato television?\""
-  options:
-  - text: Mirar un rato
-    type: 2
-    value: 1
-  - text: No mirar
-    type: 0
-    value: 1
-  activeFromDay: 5
-  activeUntilDay: 5
-  oneUseOnly: 1
+  decisionesPorDia: []
 --- !u!1 &813427825 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8034168568418328029, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -15794,7 +15781,6 @@ GameObject:
   - component: {fileID: 950730330}
   - component: {fileID: 950730329}
   - component: {fileID: 950730328}
-  - component: {fileID: 950730327}
   - component: {fileID: 950730326}
   m_Layer: 0
   m_Name: Furniture sobre2
@@ -15830,36 +15816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abf20e9a28fc374593945d243fa3672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecisionObject
-  title: 
-  options:
-  - text: Leerla mas de una vez
-    type: 2
-    value: 1
-  - text: Leerla una sola vez
-    type: 2
-    value: 0
-  activeFromDay: 3
-  activeUntilDay: 3
-  oneUseOnly: 1
---- !u!114 &950730327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950730324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcddebdb5a079ab468c26d5c51c758cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  message: "La nota dice: \"Sigues buscando las habitaciones que ya no existen. Todas
-    las personas que conozco hacen eso. Buscan el lugar donde estaban antes de que
-    todo cambiara como si ese lugar todav\xEDa fuera real. No lo es.\""
-  activeFromDay: 3
-  activeUntilDay: 3
-  oneUseOnly: 0
-  messageTime: 6
+  decisionesPorDia: []
 --- !u!64 &950730328
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -21003,12 +20960,6 @@ PrefabInstance:
       addedObject: {fileID: 1303809263}
     - targetCorrespondingSourceObject: {fileID: 5594019368767821192, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1303809262}
-    - targetCorrespondingSourceObject: {fileID: 5594019368767821192, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1303809261}
-    - targetCorrespondingSourceObject: {fileID: 5594019368767821192, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1303809260}
     - targetCorrespondingSourceObject: {fileID: 4306667413280098815, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
@@ -22390,9 +22341,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -3371397493524627093, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1430742579}
-    - targetCorrespondingSourceObject: {fileID: -3371397493524627093, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1430742578}
     - targetCorrespondingSourceObject: {fileID: -65857761814809403, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
       insertIndex: -1
       addedObject: {fileID: 510004624}
@@ -23770,11 +23718,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcddebdb5a079ab468c26d5c51c758cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  message: "\"La ropa de los dos. Siempre fue as\xED.\""
-  activeFromDay: 2
-  activeUntilDay: 999
-  oneUseOnly: 0
-  messageTime: 2
+  mensajesPorDia: []
+  mensajePorDefecto: 
+  tiempoPorDefecto: 2
 --- !u!1 &966057398 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 12107287659505012, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -28710,47 +28656,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcddebdb5a079ab468c26d5c51c758cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  message: El diario se ah bloqueado
-  activeFromDay: 3
-  activeUntilDay: 3
-  oneUseOnly: 0
-  messageTime: 2
---- !u!114 &1303809261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303809241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcddebdb5a079ab468c26d5c51c758cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  message: '"Seis meses antes de que ella no estuviera."'
-  activeFromDay: 5
-  activeUntilDay: 5
-  oneUseOnly: 0
-  messageTime: 4
---- !u!114 &1303809262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1303809241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcddebdb5a079ab468c26d5c51c758cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  message: "Siete meses atr\xE1s\n\n\"Elena lleg\xF3 tarde. Me dijo que estuvo con
-    Sandra. Cuando le pregunt\xE9 c\xF3mo estaba Sandra, tard\xF3 un momento antes
-    de responder.\""
-  activeFromDay: 4
-  activeUntilDay: 4
-  oneUseOnly: 0
-  messageTime: 6
+  mensajesPorDia:
+  - dia: 3
+    message: mensaje dia 3
+    messageTime: 2
+    oneUseOnly: 0
+    used: 0
+  - dia: 4
+    message: mensaje dia 4
+    messageTime: 2
+    oneUseOnly: 0
+    used: 0
+  - dia: 5
+    message: mensjae dia 5
+    messageTime: 2
+    oneUseOnly: 0
+    used: 0
+  mensajePorDefecto: 
+  tiempoPorDefecto: 2
 --- !u!114 &1303809263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28763,17 +28686,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abf20e9a28fc374593945d243fa3672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecisionObject
-  title: '"Un diario online"'
-  options:
-  - text: Leerlo
-    type: 2
-    value: 1
-  - text: 'Cerrarlo '
-    type: 1
-    value: 1
-  activeFromDay: 2
-  activeUntilDay: 2
-  oneUseOnly: 0
+  decisionesPorDia:
+  - dia: 2
+    title: '"Un diario  online"'
+    options:
+    - text: Leerlo
+      type: 0
+      value: 1
+    - text: Ignorar
+      type: 0
+      value: 0
+    oneUseOnly: 0
+    used: 0
 --- !u!1 &1304353919 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4552715127752741665, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -30637,31 +30561,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7523220568827416491, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
---- !u!114 &1430742578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1430742565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5abf20e9a28fc374593945d243fa3672, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DecisionObject
-  title: '"Hay una hoja detras del espejo"
-
-'
-  options:
-  - text: Quedarsela
-    type: 1
-    value: 1
-  - text: Dejarla
-    type: 0
-    value: 1
-  activeFromDay: 4
-  activeUntilDay: 4
-  oneUseOnly: 1
 --- !u!114 &1430742579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30674,17 +30573,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abf20e9a28fc374593945d243fa3672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecisionObject
-  title: 'Este espejo esta raro '
-  options:
-  - text: 'Intentar mirarse de nuevo '
-    type: 1
-    value: 1
-  - text: Alejarse rapido
-    type: 0
-    value: 1
-  activeFromDay: 3
-  activeUntilDay: 3
-  oneUseOnly: 0
+  decisionesPorDia:
+  - dia: 3
+    title: decision
+    options:
+    - text: si
+      type: 0
+      value: 0
+    - text: no
+      type: 0
+      value: 0
+    oneUseOnly: 0
+    used: 0
+  - dia: 4
+    title: decision
+    options:
+    - text: si
+      type: 0
+      value: 0
+    - text: no
+      type: 0
+      value: 0
+    oneUseOnly: 0
+    used: 0
 --- !u!1 &1431126964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3327598852729480862, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -31110,17 +31021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abf20e9a28fc374593945d243fa3672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecisionObject
-  title: '"Las plantas eran de Elena. Yo siempre me olvidaba de regarlas."'
-  options:
-  - text: ' Examinarla despacio'
-    type: 1
-    value: 1
-  - text: Mirarla y seguir
-    type: 0
-    value: 0
-  activeFromDay: 1
-  activeUntilDay: 999
-  oneUseOnly: 1
+  decisionesPorDia: []
 --- !u!1 &1449949931
 GameObject:
   m_ObjectHideFlags: 0
@@ -40033,17 +39934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abf20e9a28fc374593945d243fa3672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DecisionObject
-  title: '"Tiene mi nombre...."'
-  options:
-  - text: intentar abrir
-    type: 0
-    value: 1
-  - text: Dejarlo
-    type: 2
-    value: 1
-  activeFromDay: 1
-  activeUntilDay: 999
-  oneUseOnly: 1
+  decisionesPorDia: []
 --- !u!1001 &2077527833
 PrefabInstance:
   m_ObjectHideFlags: 0

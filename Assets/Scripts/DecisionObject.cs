@@ -3,78 +3,62 @@ using System.Collections.Generic;
 
 public class DecisionObject : MonoBehaviour
 {
-    [TextArea]
-    public string title;
+    [System.Serializable]
+    public class DecisionPorDia
+    {
+        public int dia;
+        [TextArea] public string title;
+        public List<DecisionData> options = new List<DecisionData>();
+        public bool oneUseOnly = true;
+        [HideInInspector] public bool used = false;
+    }
 
-    public List<DecisionData> options =
-        new List<DecisionData>();
-
-    [Header("Días activos")]
-    public int activeFromDay = 1;
-    public int activeUntilDay = 999;
-
-    [Header("Uso")]
-    public bool oneUseOnly = true;
-
-    bool used = false;
+    [Header("Decisiones por día")]
+    public List<DecisionPorDia> decisionesPorDia = new List<DecisionPorDia>();
 
     bool CanUse()
     {
-        if (GameManager.Instance == null)
-            return false;
-
-        int day = GameManager.Instance.currentDay;
-
-        return day >= activeFromDay &&
-               day <= activeUntilDay;
+        return GameManager.Instance != null;
     }
 
     public bool Inspect()
     {
-        if (!CanUse())
-            return false;
+        if (!CanUse()) return false;
 
-        if (oneUseOnly && used)
-            return false;
+        int day = GameManager.Instance.currentDay;
+
+        DecisionPorDia entry = decisionesPorDia.Find(d => d.dia == day);
+
+        if (entry == null) return false;
+        if (entry.oneUseOnly && entry.used) return false;
 
         GameManager.Instance.RegisterExploration();
 
-        List<DecisionOption> runtime =
-            new List<DecisionOption>();
-
-        foreach (var opt in options)
+        var runtime = new List<DecisionOption>();
+        foreach (var opt in entry.options)
         {
-            runtime.Add(
-                new DecisionOption(opt.text, () =>
-                {
-                    Execute(opt);
-                })
-            );
+            var optCopy = opt;
+            runtime.Add(new DecisionOption(opt.text, () => Execute(optCopy)));
         }
 
         DecisionManager.Instance.Show(
-            title,
+            entry.title,
             runtime,
             () =>
             {
-                used = true;
+                entry.used = true;
                 GameManager.Instance.decisionMade = true;
-            });
+            }
+        );
 
         return true;
     }
 
     void Execute(DecisionData opt)
     {
-        if (opt.type == DecisionType.Negacion)
-            GameManager.Instance.AddNegacion(opt.value);
-
-        if (opt.type == DecisionType.Duda)
-            GameManager.Instance.AddDuda(opt.value);
-
-        if (opt.type == DecisionType.Aceptacion)
-            GameManager.Instance.AddAceptacion(opt.value);
-
+        if (opt.type == DecisionType.Negacion) GameManager.Instance.AddNegacion(opt.value);
+        if (opt.type == DecisionType.Duda) GameManager.Instance.AddDuda(opt.value);
+        if (opt.type == DecisionType.Aceptacion) GameManager.Instance.AddAceptacion(opt.value);
         Debug.Log(opt.text);
     }
 }
