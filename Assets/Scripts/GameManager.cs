@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         }
         else if (currentDay == 5)
         {
-            ElenaEventos.Instance.PrepararNivel5();
+            ElenaEventos.Instance.ActivarNivel5();
         }
     }
 }

@@ -24,6 +24,11 @@ public class ElenaEventos : MonoBehaviour
     public Transform N4_EspejoLavamanos;
     public Transform N4_EspejoPasillo;
 
+    [Header("Puntos Nivel 5")]
+    public Transform N5_Sofa;
+    public Transform N5_Ventana;
+    public Transform N5_SalidaSala;
+
     private float tiempoDesdeAparicion = 0f;
     private bool elenaActiva = false;
     private bool jugadorSiguioDeInmediato = false;
@@ -32,6 +37,9 @@ public class ElenaEventos : MonoBehaviour
     private bool elenaYaAparecionivel3 = false;
     private bool jugadorCercaEspejo = false;
     private bool esperandoJugador = false;
+    private bool esperandoDecision = false;
+    private bool conversacionNivel5Terminada = false;
+    private bool decisionTVTomada = false;
 
     void Awake() { Instance = this; }
 
@@ -59,6 +67,9 @@ public class ElenaEventos : MonoBehaviour
         elenaYaAparecionivel3 = false;
         jugadorCercaEspejo = false;
         esperandoJugador = false;
+        esperandoDecision = false;
+        conversacionNivel5Terminada = false;
+        decisionTVTomada = false;
         if (animator != null)
         {
             animator.SetBool("isSitting", false);
@@ -89,11 +100,11 @@ public class ElenaEventos : MonoBehaviour
         StartCoroutine(Nivel4());
     }
 
-    public void PrepararNivel5()
+    public void ActivarNivel5()
     {
-        StopAllCoroutines();
         ResetElena();
-        gameObject.SetActive(false);
+        gameObject.SetActive(true);
+        StartCoroutine(Nivel5());
     }
 
     string EstadoDominante()
@@ -116,6 +127,24 @@ public class ElenaEventos : MonoBehaviour
             jugadorCercaEspejo = true;
     }
 
+    public void RespuestaDecisionA(int opcion)
+    {
+        if (opcion == 1)
+            GameManager.Instance.AddDuda(1);
+        else if (opcion == 2)
+            GameManager.Instance.AddNegacion(1);
+        esperandoDecision = false;
+    }
+
+    public void RespuestaDecisionTV(int opcion)
+    {
+        if (opcion == 1)
+            GameManager.Instance.AddNegacion(2);
+        else if (opcion == 2)
+            GameManager.Instance.AddAceptacion(2);
+        decisionTVTomada = true;
+    }
+
     public void EjecutarEvento(string nombreEvento)
     {
         Debug.Log("EjecutarEvento: " + nombreEvento + " Día: " + GameManager.Instance.currentDay);
@@ -133,6 +162,10 @@ public class ElenaEventos : MonoBehaviour
                 StartCoroutine(Nivel3_ApareceEnPasillo()); break;
             case "elena_aparece_sofa":
                 StartCoroutine(Nivel3_ApareceEnSofa()); break;
+            case "elena_nivel5":
+                StartCoroutine(Nivel5()); break;
+            case "elena_final_n5":
+                StartCoroutine(FinalNivel5()); break;
         }
     }
 
@@ -192,6 +225,7 @@ public class ElenaEventos : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(N2_Cama.forward);
         animator.SetBool("isSitting", true);
         elenaEnCama = true;
+        Debug.Log(" Elena en cama: " + elenaEnCama);
     }
 
     IEnumerator Evento_JugadorEntraCuarto()
@@ -355,5 +389,149 @@ public class ElenaEventos : MonoBehaviour
             yield return new WaitForSeconds(1f);
             gameObject.SetActive(false);
         }
+    }
+
+    // ===== NIVEL 5 =====
+    IEnumerator Nivel5()
+    {
+        string estado = EstadoDominante();
+        Debug.Log("Nivel 5 - Estado: " + estado);
+
+        if (estado == "Negacion")
+        {
+            agent.Warp(N5_Ventana.position);
+            yield return null;
+            transform.rotation = Quaternion.LookRotation(N5_Ventana.forward);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            transform.rotation = Quaternion.LookRotation(-N5_Ventana.forward);
+            yield return StartCoroutine(ConversacionNivel5());
+
+            yield return StartCoroutine(CaminarHasta(N5_SalidaSala));
+            gameObject.SetActive(false);
+        }
+        else if (estado == "Duda")
+        {
+            agent.enabled = false;
+            transform.position = N5_Sofa.position;
+            transform.rotation = Quaternion.LookRotation(N5_Sofa.forward);
+            animator.SetBool("isSitting", true);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            animator.SetBool("isSitting", false);
+            agent.enabled = true;
+
+            yield return StartCoroutine(ConversacionNivel5());
+
+            yield return StartCoroutine(CaminarHasta(N5_SalidaSala));
+            gameObject.SetActive(false);
+        }
+        else if (estado == "Aceptacion")
+        {
+            agent.enabled = false;
+            transform.position = N5_Sofa.position;
+            transform.rotation = Quaternion.LookRotation(N5_Sofa.forward);
+            animator.SetBool("isSitting", true);
+
+            esperandoJugador = true;
+            yield return new WaitUntil(() => jugadorCercaEspejo);
+            esperandoJugador = false;
+            jugadorCercaEspejo = false;
+
+            animator.SetBool("isSitting", false);
+            agent.enabled = true;
+
+            yield return StartCoroutine(ConversacionNivel5());
+
+            yield return StartCoroutine(CaminarHasta(N5_SalidaSala));
+            yield return new WaitForSeconds(1f);
+            DialogueManager.Instance.ShowThought("[Elena]: Ya casi.", 3f);
+            yield return new WaitForSeconds(3f);
+            gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator ConversacionNivel5()
+    {
+        DialogueManager.Instance.ShowThought("[Elena]: Llevas mucho tiempo buscando algo.", 4f);
+        yield return new WaitForSeconds(4f);
+
+        DialogueManager.Instance.ShowThought("[Martín]: ¿Qué estoy buscando?", 3f);
+        yield return new WaitForSeconds(3f);
+
+        DialogueManager.Instance.ShowThought("[Elena]: Lo que estás buscando no es lo que crees que estás buscando.", 5f);
+        yield return new WaitForSeconds(5f);
+
+        transform.rotation = Quaternion.LookRotation(N5_Ventana.forward);
+        yield return new WaitForSeconds(2f);
+        transform.rotation = Quaternion.LookRotation(N5_Sofa.forward);
+
+        DialogueManager.Instance.ShowThought("[Elena]: ¿Cuánto tiempo crees que llevas aquí?", 4f);
+        yield return new WaitForSeconds(4f);
+
+        esperandoDecision = true;
+        yield return new WaitUntil(() => !esperandoDecision);
+
+        DialogueManager.Instance.ShowThought("[Elena]: Yo sí sé cuánto tiempo llevas aquí.", 4f);
+        yield return new WaitForSeconds(4f);
+
+        DialogueManager.Instance.ShowThought("[Martín]: ¿Cuánto?", 2f);
+        yield return new WaitForSeconds(2f);
+
+        DialogueManager.Instance.ShowThought("[Elena]: Cuando estés listo para saberlo, ya lo vas a saber.", 5f);
+        yield return new WaitForSeconds(5f);
+
+        yield return StartCoroutine(CaminarHasta(N5_Ventana));
+        transform.rotation = Quaternion.LookRotation(N5_Ventana.forward);
+
+        DialogueManager.Instance.ShowThought("[Elena]: El problema no es que no lo sepas. El problema es que no quieres saber.", 6f);
+        yield return new WaitForSeconds(6f);
+
+        yield return new WaitForSeconds(6f);
+
+        conversacionNivel5Terminada = true;
+    }
+
+    IEnumerator FinalNivel5()
+    {
+        if (!conversacionNivel5Terminada || !decisionTVTomada)
+        {
+            yield return null;
+            yield break;
+        }
+
+        string estado = EstadoDominante();
+        Debug.Log("Final Nivel 5 - Estado: " + estado);
+
+        gameObject.SetActive(true);
+        agent.Warp(N5_Sofa.position);
+        yield return null;
+        transform.rotation = Quaternion.LookRotation(N5_Sofa.forward);
+
+        if (estado == "Negacion")
+        {
+            DialogueManager.Instance.ShowThought("[Elena]: Sigues sin querer ver. Pero ya no importa cuánto tiempo pase... seguirás aquí.", 6f);
+            yield return new WaitForSeconds(6f);
+        }
+        else if (estado == "Duda")
+        {
+            DialogueManager.Instance.ShowThought("[Elena]: Ya casi lo entiendes. La respuesta siempre estuvo frente a ti. Solo que nunca quisiste mirarla.", 6f);
+            yield return new WaitForSeconds(6f);
+        }
+        else if (estado == "Aceptacion")
+        {
+            DialogueManager.Instance.ShowThought("[Elena]: Ya lo sabes. Solo tienes que aceptarlo. Yo ya lo acepté... hace mucho tiempo.", 6f);
+            yield return new WaitForSeconds(6f);
+        }
+
+        gameObject.SetActive(false);
     }
 }
