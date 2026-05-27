@@ -834,6 +834,7 @@ GameObject:
   - component: {fileID: 31889495}
   - component: {fileID: 31889494}
   - component: {fileID: 31889496}
+  - component: {fileID: 31889497}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -891,6 +892,18 @@ MonoBehaviour:
   optionTexts:
   - {fileID: 2123022300}
   - {fileID: 20023318}
+--- !u!114 &31889497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31889493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e72fa60c7cfb8448158eba3a1d62bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStarter
 --- !u!1 &33914285 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4440989423395231452, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
