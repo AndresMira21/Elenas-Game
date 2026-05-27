@@ -3897,7 +3897,7 @@ Transform:
   m_GameObject: {fileID: 218683171}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7208621, z: -0, w: 0.6930786}
-  m_LocalPosition: {x: 14.452, y: 9.136, z: -6.739}
+  m_LocalPosition: {x: 14.452, y: 9.139, z: -6.739}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10015,6 +10015,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1688237420733708629, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!1 &616051168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 616051169}
+  m_Layer: 0
+  m_Name: N5_Sofa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &616051169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616051168}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9991571, z: -0, w: -0.041050598}
+  m_LocalPosition: {x: 11.989, y: 6.557, z: -1.736}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -184.705, z: 0}
 --- !u!1 &617531372 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9025436415050367499, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -15254,6 +15285,75 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4945568280713120866, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!1 &929157162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929157165}
+  - component: {fileID: 929157164}
+  - component: {fileID: 929157163}
+  m_Layer: 0
+  m_Name: Trigger_N5_Habitacion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &929157163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929157162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef62d387fa7007e4c98ede80a2f5557f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerElena
+  nombreEvento: elena_final_n5
+  diaRequerido: 5
+  delayActivacion: 0
+--- !u!65 &929157164
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929157162}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &929157165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929157162}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0060464144, y: 0.0017096375, z: -0.0017816232, w: 0.9999787}
+  m_LocalPosition: {x: 8.436, y: 9.66, z: -6.387}
+  m_LocalScale: {x: 1.2012863, y: 1.8228631, z: -0.5354655}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -0.693, y: 0.197, z: -0.205}
 --- !u!1 &930587432 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4475210026173050835, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -25780,6 +25880,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5992801206756784368, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!1 &1102001861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1102001862}
+  m_Layer: 0
+  m_Name: N5_Ventana
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1102001862
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102001861}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.75465125, z: -0, w: 0.65612626}
+  m_LocalPosition: {x: 6.995, y: 6.12, z: -4.00049}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -97.99, z: 0}
 --- !u!1 &1102244487 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -42372490116300943, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -30312,6 +30443,75 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4781867331240399068, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!1 &1396114468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1396114471}
+  - component: {fileID: 1396114470}
+  - component: {fileID: 1396114469}
+  m_Layer: 0
+  m_Name: Trigger_N5_EntradaSala
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1396114469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396114468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef62d387fa7007e4c98ede80a2f5557f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerElena
+  nombreEvento: elena_nivel5
+  diaRequerido: 5
+  delayActivacion: 0
+--- !u!65 &1396114470
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396114468}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1396114471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396114468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.777, y: 6.333, z: -5.731}
+  m_LocalScale: {x: 3.8278985, y: 3.039202, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1400907612 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7441983442243507383, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -31564,7 +31764,7 @@ Transform:
   m_GameObject: {fileID: 1451627388}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.8592, y: 9.12, z: -6.7118}
+  m_LocalPosition: {x: 14.8592, y: 9.64, z: -6.7118}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33373,7 +33573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TriggerElena
   nombreEvento: elena_aparece_sofa
   diaRequerido: 3
-  delayActivacion: 80
+  delayActivacion: 70
 --- !u!65 &1562056466
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33506,8 +33706,6 @@ MonoBehaviour:
   mensajeNoDormir: "A\xFAn no has explorado lo suficiente..."
   mensajeDormir: Te acuestas a dormir...
   tiempoMensaje: 2
-  escenaEnding: Ending
-  diaEnding: 5
 --- !u!208 &1566239556
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -36566,6 +36764,12 @@ MonoBehaviour:
   N3_Pasillo: {fileID: 1090455951}
   N3_Sofa: {fileID: 299051553}
   N3_Cuarto: {fileID: 1475409043}
+  N4_EntradaBano: {fileID: 1918085500}
+  N4_EspejoLavamanos: {fileID: 1555506683}
+  N4_EspejoPasillo: {fileID: 218683172}
+  N5_Sofa: {fileID: 616051169}
+  N5_Ventana: {fileID: 1102001862}
+  N5_SalidaSala: {fileID: 1817808111}
 --- !u!195 &1803845234
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -36854,6 +37058,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 469327005289792458, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
+--- !u!1 &1817808110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817808111}
+  m_Layer: 0
+  m_Name: N5_SalidaSala
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1817808111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817808110}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.04480009, y: 0.28364894, z: 0.0640568, w: 0.9557369}
+  m_LocalPosition: {x: 8.586, y: 9.122, z: -6.638}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -7.006, y: 32.717, z: 5.61}
 --- !u!1 &1822530545 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3211773945583968488, guid: d34a0dbe5752751488bc6d39f4b01721, type: 3}
@@ -41747,3 +41982,8 @@ SceneRoots:
   - {fileID: 1555506683}
   - {fileID: 218683172}
   - {fileID: 1451627391}
+  - {fileID: 616051169}
+  - {fileID: 1102001862}
+  - {fileID: 1817808111}
+  - {fileID: 1396114471}
+  - {fileID: 929157165}
